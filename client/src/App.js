@@ -10,12 +10,6 @@ function App() {
   }, []);
 
   return (
-/*    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>{!data ? "Loading..." : data}</p>
-      </header>
-    </div> */
     <section>
       <article className='box chat'>
         <header>
@@ -23,7 +17,7 @@ function App() {
         </header>
         <div className='chat-view'>
           <div className='messages'>
-
+            <p>{!data ? "Loading..." : data}</p>
           </div>
         </div>
         <form className='chat-controller'>
