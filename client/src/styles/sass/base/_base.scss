@@ -1,0 +1,190 @@
+
+// BASIC ELEMENTS
+
+* {
+    scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
+    font-family: $main-font;
+}
+html, body {
+    height: 100%;
+    background-color: $background-color;
+    color: $font-primary-color;
+    overflow: hidden;
+}
+a {
+    color: $background-color;
+    text-decoration: none;
+    font-weight: bold;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+// SCROLL BAR
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: $secondary-color;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: $button-secondary-hover-color;
+}
+
+// ROUND IMAGE
+
+.round-image {
+    width: 50px;
+    height: 50px;
+
+    img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+
+// BTN
+
+.btn {
+    font-family: $bold-font;
+    font-size: 22px;
+    color: $font-primary-color;
+    background-color: $button-secondary-color;
+    border: none;
+    box-shadow: 0 4px 4px $shadow-color;
+    cursor: pointer;
+    width: 140px;
+    height: 45px;
+    display: block;
+    position: relative;
+    border-radius: 5px;
+
+    i {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    &.round {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+    }
+    &.add {
+        background-color: $button-add-color;
+
+        &:hover {
+            background-color: $button-add-hover-color;
+        }
+    }
+    &:hover {
+        background-color: $button-secondary-hover-color;
+    }
+    &:disabled {
+        opacity: 0.5;
+
+        &:hover {
+            background-color: $button-secondary-color;
+            cursor: auto;
+        }
+    }
+}
+
+// BOX
+
+.box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $primary-color;
+    text-align: center;
+    width: 450px;
+    height: 450px;
+    border-radius: 5px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    box-shadow: 2px 5px 15px $shadow-color;
+
+    .btn {
+        margin-top: 150px;
+        margin-bottom: 30px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .input-field {
+        display: inline-block;
+        border: none;
+        width: 80%;
+        height: 40px;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: $light-font;
+        font-size: 22px;
+        margin-bottom: 20px;
+        background-color: $input-background-color;
+
+        &:focus {
+            outline: 1px solid black;
+        }
+    }
+    .circle-file-input {
+        position: relative;
+        display: block;
+        background-color: $input-background-color;
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+
+        input {
+            display: none;
+        }
+        &:hover {
+            cursor: pointer;
+            background-color: #cccccc;
+        }
+        p {
+            color: $font-secondary-color;
+            font-size: 26px;
+            font-family: $light-font;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+    .small-notice {
+        font-size: 12px;
+        text-align: left;
+        margin-left: 10%;
+
+        ul {
+            margin-left: 30px;
+        }
+    }
+    h1 {
+        font-family: $light-font;
+        font-weight: 100;
+        font-size: 48px;
+        margin-bottom: 60px;
+    }
+}
