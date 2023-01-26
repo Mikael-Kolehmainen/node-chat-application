@@ -1,5 +1,5 @@
-let AWS = require("aws-sdk");
-let awsConfig = {
+const AWS = require("aws-sdk");
+const awsConfig = {
     "region": "us-east-1",
     "endpoint": "http://localhost:8000/",
     "accessKeyId": "key",
@@ -7,7 +7,7 @@ let awsConfig = {
 };
 AWS.config.update(awsConfig);
 
-let docClient = new AWS.DynamoDB.DocumentClient();
+const docClient = new AWS.DynamoDB.DocumentClient();
 
 const fetchOneByKey = () => {
     const params = {
