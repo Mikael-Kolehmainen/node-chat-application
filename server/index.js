@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const message = require("./dynamodb/message");
+const Message = require("./dynamodb/Message");
 
 const PORT = process.env.PORT || 3001;
 
@@ -9,7 +9,8 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/send-message", (req, res) => {
-    message.insertMessage(req.body.message);
+    const message = new Message(req.body.message);
+    message.insert();
 });
 
 app.listen(PORT, () => {

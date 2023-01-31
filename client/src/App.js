@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from "axios";
 
 function App() {
   const [message, setMessage] = useState(null);
@@ -7,9 +8,17 @@ function App() {
     setMessage({[event.target.name]: event.target.value});
   }
 
-  const sendMessage = (event) => {
+  async function sendMessage (event) {
+    event.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:3001/send-message", message);
 
-    fetch('http://localhost:3001/send-message', {
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+
+  /*  fetch('http://localhost:3001/send-message', {
       method: 'POST',
       headers: {
         'Content-Type' : 'application/json',
@@ -18,9 +27,7 @@ function App() {
     }).then(function(response) {
       console.log(response);
       return response.json;
-    });
-
-    event.preventDefault();
+    }); */
   }
 
   return (
