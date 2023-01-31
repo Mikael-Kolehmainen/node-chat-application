@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
 
 function App() {
   const [message, setMessage] = useState(null);
+  const [messages, setMessages] = useState(null);
+
+  useEffect(() => {
+    console.log("test");
+    async function getMessages() {
+      try {
+        const response = await axios.get("http://localhost:3001/get-messages");
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getMessages();
+  }, []);
 
   const handleChange = (event) => {
     setMessage({[event.target.name]: event.target.value});
   }
 
-  async function sendMessage (event) {
+  async function sendMessage(event) {
     event.preventDefault();
     try {
       const response = await axios.post("http://localhost:3001/send-message", message);
@@ -17,17 +31,6 @@ function App() {
     } catch (error) {
       console.log(error);
     }
-
-  /*  fetch('http://localhost:3001/send-message', {
-      method: 'POST',
-      headers: {
-        'Content-Type' : 'application/json',
-      },
-      body: JSON.stringify(message)
-    }).then(function(response) {
-      console.log(response);
-      return response.json;
-    }); */
   }
 
   return (
@@ -38,7 +41,7 @@ function App() {
         </header>
         <div className='chat-view'>
           <div className='messages'>
-            <p></p>
+
           </div>
         </div>
         <form className='chat-controller' onSubmit={sendMessage}>

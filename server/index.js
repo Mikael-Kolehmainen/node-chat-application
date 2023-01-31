@@ -13,6 +13,12 @@ app.post("/send-message", (req, res) => {
     message.insert();
 });
 
+app.get("/get-messages", async (req, res) => {
+    const message = new Message();
+    const messages = await message.selectAll();
+    res.send(messages);
+});
+
 app.listen(PORT, () => {
     console.log(`Server listening to ${PORT}`);
 });
