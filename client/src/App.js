@@ -1,13 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 function App() {
-  const [data, setData] = useState(null);
+  const [message, setMessage] = useState(null);
 
-  useEffect(() => {
-    fetch("/api")
-    .then((res) => res.json())
-    .then((data) => setData(data.message));
-  }, []);
+  const handleChange = (event) => {
+    setMessage({[event.target.name]: event.target.value});
+  }
+
+  const sendMessage = (event) => {
+
+    fetch('http://localhost:3001/send-message', {
+      method: 'POST',
+      headers: {
+        'Content-Type' : 'application/json',
+      },
+      body: JSON.stringify(message)
+    }).then(function(response) {
+      console.log(response);
+      return response.json;
+    });
+
+    event.preventDefault();
+  }
 
   return (
     <section>
@@ -17,11 +31,11 @@ function App() {
         </header>
         <div className='chat-view'>
           <div className='messages'>
-            <p>{!data ? "Loading..." : data}</p>
+            <p></p>
           </div>
         </div>
-        <form className='chat-controller'>
-          <input type='text' name='message' className='input-field' placeholder='Write message here' required />
+        <form className='chat-controller' onSubmit={sendMessage}>
+          <input type='text' name='message' onChange={handleChange} className='input-field' placeholder='Write message here' required />
           <input type='submit' name='send-message' value='SEND' className='btn' />
         </form>
       </article>
