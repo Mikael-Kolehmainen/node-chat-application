@@ -3,7 +3,7 @@ import axios from "axios";
 import Messages from "./components/Messages";
 
 function App() {
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState("");
   const [messageElements, setMessageElements] = useState([]);
 
   useEffect(() => {
@@ -36,6 +36,7 @@ function App() {
   async function sendMessage(event) {
     event.preventDefault();
     try {
+      document.getElementById('message-input').value = "";
       const response = await axios.post("http://localhost:3001/send-message", message);
 
       console.log(response);
@@ -56,7 +57,7 @@ function App() {
           </div>
         </div>
         <form className='chat-controller' onSubmit={sendMessage}>
-          <input type='text' name='message' onChange={handleChange} className='input-field' placeholder='Write message here' required />
+          <input type='text' name='message' onChange={handleChange} id='message-input' className='input-field' placeholder='Write message here' required />
           <input type='submit' name='send-message' value='SEND' className='btn' />
         </form>
       </article>
