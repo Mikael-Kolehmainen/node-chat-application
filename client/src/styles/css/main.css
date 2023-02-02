@@ -42,10 +42,10 @@ section .chat {
       position: absolute;
       bottom: 0;
       max-height: 100%;
+      width: 95%;
       overflow-y: auto; }
       section .chat .chat-view .messages .message {
         position: relative;
-        display: flex;
         margin-top: 15px;
         margin-bottom: 15px; }
         section .chat .chat-view .messages .message p {
@@ -54,7 +54,7 @@ section .chat {
         section .chat .chat-view .messages .message p:not(.time) {
           background-color: #EAEAEA;
           margin-left: 5px;
-          width: 355px;
+          width: 90%;
           border-radius: 5px;
           text-align: justify;
           padding: 10px; }
@@ -62,7 +62,7 @@ section .chat {
           font-size: 12px;
           position: absolute;
           bottom: 0%;
-          right: 0%;
+          right: 2%;
           transform: translate(-50%, -50%);
           background-color: transparent; }
         section .chat .chat-view .messages .message.sent {

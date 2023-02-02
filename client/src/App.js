@@ -1,22 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
+import Messages from "./components/Messages";
 
 function App() {
   const [message, setMessage] = useState(null);
-  const [messages, setMessages] = useState(null);
+  const [messageElements, setMessageElements] = useState([]);
 
   useEffect(() => {
-    console.log("test");
-    async function getMessages() {
-      try {
-        const response = await axios.get("http://localhost:3001/get-messages");
-        console.log(response);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getMessages();
-  }, []);
+    const messageUpdateInterval = setInterval(async () => {
+      const messages = await updateMessages();
+      let elements = [];
+      messages.forEach(data => {
+        const shortenedMessageTime = data.timeofmessage.substring(0, 5);
+        elements.push(
+          <div className='message' key={data.message_key}>
+            <p className='text'>{data.message}</p>
+            <p className='time'>{shortenedMessageTime}</p>
+          </div>
+        );
+      });
+      setMessageElements(elements);
+    }, 100);
+
+    return () => clearInterval(messageUpdateInterval);
+  }, [])
+
+  async function updateMessages() {
+    return await Messages.get();
+  }
 
   const handleChange = (event) => {
     setMessage({[event.target.name]: event.target.value});
@@ -41,7 +52,7 @@ function App() {
         </header>
         <div className='chat-view'>
           <div className='messages'>
-
+            {messageElements}
           </div>
         </div>
         <form className='chat-controller' onSubmit={sendMessage}>

@@ -39,11 +39,11 @@ section {
                 position: absolute;
                 bottom: 0;
                 max-height: 100%;
+                width: 95%;
                 overflow-y: auto;
 
                 .message {
                     position: relative;
-                    display: flex;
                     margin-top: 15px;
                     margin-bottom: 15px;
 
@@ -54,7 +54,7 @@ section {
                     p:not(.time) {
                         background-color: $input-background-color;
                         margin-left: 5px;
-                        width: 355px;
+                        width: 90%;
                         border-radius: 5px;
                         text-align: justify;
                         padding: 10px;
@@ -63,7 +63,7 @@ section {
                         font-size: 12px;
                         position: absolute;
                         bottom: 0%;
-                        right: 0%;
+                        right: 2%;
                         transform: translate(-50%, -50%);
                         background-color: transparent;
                     }
