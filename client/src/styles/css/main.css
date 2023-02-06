@@ -46,8 +46,8 @@ section .chat {
       overflow-y: auto; }
       section .chat .chat-view .messages .message {
         position: relative;
-        margin-top: 15px;
-        margin-bottom: 15px; }
+        margin-top: 10px;
+        margin-bottom: 10px; }
         section .chat .chat-view .messages .message p {
           font-family: roboto-light;
           color: black; }

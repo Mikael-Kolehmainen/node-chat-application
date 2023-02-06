@@ -2,21 +2,28 @@
 module.exports = class DateTime {
     constructor() {
         this.today = new Date();
+        this.month = this.#addZeroInStart(this.today.getMonth() + 1);
+        this.date = this.#addZeroInStart(this.today.getDate());
+        this.hours = this.#addZeroInStart(this.today.getHours());
+        this.minutes = this.#addZeroInStart(this.today.getMinutes());
+        this.seconds = this.#addZeroInStart(this.today.getSeconds());
     }
 
     getCurrentDate() {
-        let month = this.#addZeroInStart(this.today.getMonth() + 1);
-        let date = this.#addZeroInStart(this.today.getDate());
-
-        return this.today.getFullYear() + '-' + month + '-' + date;
+        return this.today.getFullYear() + '-' + this.month + '-' + this.date;
     }
 
     getCurrentTime() {
-        let hours = this.#addZeroInStart(this.today.getHours());
-        let minutes = this.#addZeroInStart(this.today.getMinutes());
-        let seconds = this.#addZeroInStart(this.today.getSeconds());
+        return this.hours + ":" + this.minutes + ":" + this.seconds;
+    }
 
-        return hours + ":" + minutes + ":" + seconds;
+    getDateTime() {
+        return this.today.getFullYear()
+                + this.month
+                + this.date
+                + this.hours
+                + this.minutes
+                + this.seconds;
     }
 
     #addZeroInStart(value) {

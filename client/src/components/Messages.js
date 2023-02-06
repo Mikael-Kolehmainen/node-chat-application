@@ -9,6 +9,17 @@ class Messages {
             console.log(error);
         }
     }
+
+    static async send(message) {
+        try {
+          document.getElementById('message-input').value = "";
+          const response = await axios.post("http://localhost:3001/send-message", message);
+
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+    }
 }
 
 export default Messages;

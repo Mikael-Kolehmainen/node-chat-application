@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from "axios";
 import Messages from "./components/Messages";
+import DateTime from "./classes/DateTime";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -11,11 +11,14 @@ function App() {
       const messages = await updateMessages();
       let elements = [];
       messages.forEach(data => {
-        const shortenedMessageTime = data.timeofmessage.substring(0, 5);
+        const dateTime = new DateTime(data.message_date);
+        const messageTime = dateTime.getHourMinute();
+        const messageDate = dateTime.getDate();
+        console.log(messageDate);
         elements.push(
           <div className='message' key={data.message_key}>
             <p className='text'>{data.message}</p>
-            <p className='time'>{shortenedMessageTime}</p>
+            <p className='time'>{messageTime}</p>
           </div>
         );
       });
@@ -35,14 +38,7 @@ function App() {
 
   async function sendMessage(event) {
     event.preventDefault();
-    try {
-      document.getElementById('message-input').value = "";
-      const response = await axios.post("http://localhost:3001/send-message", message);
-
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
+    Messages.send(message);
   }
 
   return (

@@ -23,10 +23,9 @@ module.exports = class Message {
 
         const item = {
             "message_key": key.create(15),
+            "message_date": today.getDateTime(),
             "message": this.message,
             "sender": "anonymous",
-            "dateofmessage": date,
-            "timeofmessage": time
         };
         const params = {
             TableName: this.#TABLE_NAME,
@@ -48,13 +47,24 @@ module.exports = class Message {
             TableName: this.#TABLE_NAME,
         };
 
-        const scanResults = [];
+        let scanResults = [];
         do{
             const items = await docClient.scan(params).promise();
             items.Items.forEach((item) => scanResults.push(item));
             params.ExclusiveStartKey = items.LastEvaluatedKey;
         }while(typeof params.ExclusiveStartKey !== "undefined");
 
+        scanResults.sort(this.#sortByDate);
+
         return scanResults;
+    }
+
+    #sortByDate(a, b) {
+        if (a.message_date === b.message_date) {
+            return 0;
+        }
+        else {
+            return (a.message_date < b.message_date) ? -1 : 1;
+        }
     }
 }
