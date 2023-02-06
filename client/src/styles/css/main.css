@@ -75,7 +75,7 @@ section .chat {
             right: 12.5%; }
       section .chat .chat-view .messages .date {
         position: sticky;
-        top: 10px;
+        top: 0;
         z-index: 99;
         background-color: #EAEAEA;
         color: black;
