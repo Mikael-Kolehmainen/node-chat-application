@@ -1,0 +1,15 @@
+{
+    "TableName": "messages",
+    "KeySchema": [
+        { "AttributeName": "message_key", "KeyType": "HASH"},
+        { "AttributeName": "message_date", "KeyType": "RANGE"}
+    ],
+    "AttributeDefinitions": [
+        { "AttributeName": "message_key", "AttributeType": "S" },
+        { "AttributeName": "message_date", "AttributeType": "S" }
+    ],
+    "ProvisionedThroughput": {
+        "ReadCapacityUnits": 5,
+        "WriteCapacityUnits": 5
+    }
+}

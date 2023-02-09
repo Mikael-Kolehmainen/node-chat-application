@@ -18,9 +18,6 @@ module.exports = class Message {
         const docClient = AWS.getAwsDocClient();
 
         const today = new DateTime();
-        const date = today.getCurrentDate();
-        const time = today.getCurrentTime();
-
         const item = {
             "message_key": key.create(15),
             "message_date": today.getDateTime(),

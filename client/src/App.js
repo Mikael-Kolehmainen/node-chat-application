@@ -11,25 +11,27 @@ function App() {
       const messages = await getMessages();
       let elements = [];
       let messageDates = [];
-      messages.forEach(data => {
-        const dateTime = new DateTime(data.message_date);
-        const messageTime = dateTime.getHourMinute();
-        const messageDate = dateTime.getDate();
-        if (!messageDates.includes(messageDate)) {
+      if (typeof messages !== "undefined") {
+        messages.forEach(data => {
+          const dateTime = new DateTime(data.message_date);
+          const messageTime = dateTime.getHourMinute();
+          const messageDate = dateTime.getDate();
+          if (!messageDates.includes(messageDate)) {
+            elements.push(
+              <div className='date' key={messageDate}>
+                <p className='p'>{messageDate}</p>
+              </div>
+            );
+            messageDates.push(messageDate);
+          }
           elements.push(
-            <div className='date' key={messageDate}>
-              <p className='p'>{messageDate}</p>
+            <div className='message' key={data.message_key}>
+              <p className='text'>{data.message}</p>
+              <p className='time'>{messageTime}</p>
             </div>
           );
-          messageDates.push(messageDate);
-        }
-        elements.push(
-          <div className='message' key={data.message_key}>
-            <p className='text'>{data.message}</p>
-            <p className='time'>{messageTime}</p>
-          </div>
-        );
-      });
+        });
+      }
       setMessageElements(elements);
     }, 100);
 
