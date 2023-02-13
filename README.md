@@ -1,5 +1,11 @@
 # Node-chat-application
 
+## AWS services used in project
+<ul>
+  <li>DynamoDB</li>
+  <li>S3</li>
+</ul>
+
 ## How to install LocalStack
 <p>https://www.youtube.com/watch?app=desktop&v=ATo19E6oegE&ab_channel=DevOpsJourney</p>
 
