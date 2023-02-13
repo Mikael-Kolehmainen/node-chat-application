@@ -63,8 +63,14 @@ function App() {
           </div>
         </div>
         <form className='chat-controller' onSubmit={sendMessage}>
-          <input type='text' name='message' onChange={handleChange} id='message-input' className='input-field' placeholder='Write message here' required />
-          <input type='submit' name='send-message' value='SEND' className='btn' />
+          <input type='text' name='message' onChange={handleChange} id='message-input' className='input-field' placeholder='Write message here' />
+          <div className='file-upload'>
+            <label htmlFor='message-media-input' className='btn icon'>
+              <i className='fa-solid fa-file'></i>
+            </label>
+            <input type='file' name='message-media' id='message-media-input' className='input-media-field' accept='image/jpg/jpeg/png/gif' />
+          </div>
+          <input type='submit' name='send-message' value='SEND' className='btn' id='send-btn' />
         </form>
       </article>
     </section>
