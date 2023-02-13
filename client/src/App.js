@@ -4,6 +4,7 @@ import DateTime from "./classes/DateTime";
 
 function App() {
   const [message, setMessage] = useState("");
+  const [image, setImage] = useState(null);
   const [messageElements, setMessageElements] = useState([]);
 
   useEffect(() => {
@@ -42,13 +43,22 @@ function App() {
     return await Messages.get();
   }
 
-  const handleChange = (event) => {
+  const handleTextInput = (event) => {
     setMessage({[event.target.name]: event.target.value});
+  }
+
+  const handleImageInput = (event) => {
+    setImage(event.target.files[0]);
   }
 
   async function sendMessage(event) {
     event.preventDefault();
-    Messages.send(message);
+    if (message !== "") {
+      Messages.send(message);
+    } else if (image !== null) {
+      // ? Doesn't work because state being passed as parameter ?
+      Messages.sendImage(image);
+    }
   }
 
   return (
@@ -63,12 +73,12 @@ function App() {
           </div>
         </div>
         <form className='chat-controller' onSubmit={sendMessage}>
-          <input type='text' name='message' onChange={handleChange} id='message-input' className='input-field' placeholder='Write message here' />
+          <input type='text' name='message' onChange={handleTextInput} id='message-input' className='input-field' placeholder='Write message here' />
           <div className='file-upload'>
             <label htmlFor='message-media-input' className='btn icon'>
               <i className='fa-solid fa-file'></i>
             </label>
-            <input type='file' name='message-media' id='message-media-input' className='input-media-field' accept='image/jpg/jpeg/png/gif' />
+            <input type='file' name='message-media' onChange={handleImageInput} id='message-media-input' className='input-media-field' accept='image/jpg/jpeg/png/gif' />
           </div>
           <input type='submit' name='send-message' value='SEND' className='btn' id='send-btn' />
         </form>

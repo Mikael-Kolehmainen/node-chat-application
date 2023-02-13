@@ -9,8 +9,11 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/send-message", (req, res) => {
-    const message = new Message(req.body.message);
-    message.insert();
+  console.log(res.status);
+  console.log(req.file);
+  return res.status(200).send(req.file)
+  /*  const message = new Message(req.body.message);
+    message.insert(); */
 });
 
 app.get("/get-messages", async (req, res) => {
