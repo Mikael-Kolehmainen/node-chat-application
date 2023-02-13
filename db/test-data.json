@@ -1,0 +1,6 @@
+{
+  "message_key": {"S": "012345678910112"},
+  "message_date": {"S": "20230213170402" },
+  "message": {"S": "This is a test message"},
+  "sender": {"S": "anonymous"}
+}

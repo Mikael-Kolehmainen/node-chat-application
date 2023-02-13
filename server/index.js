@@ -14,9 +14,9 @@ app.post("/send-message", (req, res) => {
 });
 
 app.get("/get-messages", async (req, res) => {
-    const message = new Message();
-    const messages = await message.selectAll();
-    res.send(messages);
+  const message = new Message();
+  const messages = await message.selectAll();
+  res.send(messages);
 });
 
 app.listen(PORT, () => {

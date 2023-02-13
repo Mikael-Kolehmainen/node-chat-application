@@ -33,7 +33,7 @@ function App() {
         });
       }
       setMessageElements(elements);
-    }, 100);
+    }, 1000);
 
     return () => clearInterval(messageUpdateInterval);
   }, [])
