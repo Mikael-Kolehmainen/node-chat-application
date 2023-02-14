@@ -11,6 +11,7 @@ function App() {
   useEffect(() => {
     const messageUpdateInterval = setInterval(async () => {
       const messages = await getMessages();
+      console.log(messages);
       let elements = [];
       let messageDates = [];
       if (typeof messages !== "undefined") {

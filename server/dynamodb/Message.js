@@ -1,4 +1,4 @@
-const fs = require("fs");
+const jwt = require("jsonwebtoken");
 
 const { AWS } = require("../AWS");
 const DateTime = require("../misc/DateTime");
@@ -13,6 +13,7 @@ module.exports = class Message {
     #FIELD_TIME = "timeofmessage";
 
     #AWS_BUCKET = "chat-images";
+    #JWT_SECRET_KEY = "tdM1gNg8JpWdKcE";
 
     constructor(message) {
       this.message = message;
@@ -33,34 +34,44 @@ module.exports = class Message {
         Item: item
       }
       docClient.put(params, function(error, data) {
-        if (error) {
-          console.log("messages::insert::error - " + JSON.stringify(error, null, 2));
-        } else {
-          console.log("messages::insert::success");
-        }
+        if (error) console.log("messages::insert::error - " + JSON.stringify(error, null, 2));
+        console.log("messages::insert::success");
       });
     }
 
     insertImage() {
-      /*
-        TODO:
-        1. Save image with unique name (randomize key) to S3
-        2. Save name to Dynamodb
-      */
-      const fileName = key.create(15);
-      const params = {
-        Bucket: this.#AWS_BUCKET,
-        Key: fileName,
-        Body: this.message
-      }
-
       const s3 = new AWS.S3({
         s3ForcePathStyle: true
       });
-      s3.upload(params, function(err, data) {
+      const fileName = key.create(15);
+      const params_s3 = {
+        Bucket: this.#AWS_BUCKET,
+        Key: fileName,
+        Body: this.message
+      };
+
+      s3.upload(params_s3, function(err, data) {
         if (err) throw err;
         console.log("File uploaded", data);
-      })
+      });
+
+      const docClient = new AWS.DynamoDB.DocumentClient();
+
+      const today = new DateTime();
+      const item = {
+        "message_key": key.create(15),
+        "message_date": today.getDateTime(),
+        "message_image_name": fileName,
+        "sender": "anonymous",
+      };
+      const params_db = {
+        TableName: this.#TABLE_NAME,
+        Item: item
+      };
+      docClient.put(params_db, function(error, data) {
+        if (error) console.log("messages::insert::error - " + JSON.stringify(error, null, 2));
+        console.log("messages::insert::success");
+      });
     }
 
     async selectAll() {
@@ -70,23 +81,35 @@ module.exports = class Message {
         TableName: this.#TABLE_NAME,
       };
 
-      let scanResults = [];
+      let messages = [];
       do{
         const items = await docClient.scan(params).promise();
-        items.Items.forEach((item) => scanResults.push(item));
+        items.Items.forEach((item) => messages.push(item));
         params.ExclusiveStartKey = items.LastEvaluatedKey;
       }while(typeof params.ExclusiveStartKey !== "undefined");
 
-      scanResults.sort(this.#sortByDate);
+      messages.sort(this.#sortByDate);
 
-      return scanResults;
+  /*    const s3 = new AWS.S3({
+        s3ForcePathStyle: true
+      });
+      messages.forEach(async (message) => {
+        if (typeof message.message_image_name !== "undefined") {
+          const params_s3 = {
+            Bucket: this.#AWS_BUCKET,
+            Key: message.message_image_name
+          };
+          message.message_image_url = await s3.getSignedUrlPromise('getObject', params_s3);
+        }
+      }); */
+
+      return messages;
     }
 
     #sortByDate(a, b) {
       if (a.message_date === b.message_date) {
         return 0;
-      }
-      else {
+      } else {
         return (a.message_date < b.message_date) ? -1 : 1;
       }
     }
