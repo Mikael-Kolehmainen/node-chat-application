@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Messages from "./components/Messages";
 import DateTime from "./classes/DateTime";
@@ -56,7 +57,6 @@ function App() {
     if (message !== "") {
       Messages.send(message);
     } else if (image !== null) {
-      // ? Doesn't work because state being passed as parameter ?
       Messages.sendImage(image);
     }
   }

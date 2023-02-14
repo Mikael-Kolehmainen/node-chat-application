@@ -1,4 +1,5 @@
 const express = require("express");
+const fileupload = require("express-fileupload");
 const cors = require("cors");
 const Message = require("./dynamodb/Message");
 
@@ -7,13 +8,18 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(fileupload());
 
 app.post("/send-message", (req, res) => {
-  console.log(res.status);
-  console.log(req.file);
-  return res.status(200).send(req.file)
-  /*  const message = new Message(req.body.message);
-    message.insert(); */
+  const messageData = typeof req.files.file.data !== "undefined" ? req.files.file.data : req.body.message;
+
+  const message = new Message(messageData);
+
+  if (typeof messageData === "string") {
+    message.insert();
+  } else if (typeof messageData === "object") {
+    message.insertImage();
+  }
 });
 
 app.get("/get-messages", async (req, res) => {
