@@ -39,31 +39,35 @@ section {
                 position: absolute;
                 bottom: 0;
                 max-height: 100%;
-                width: 95%;
+                width: 97.5%;
                 overflow-y: auto;
 
                 .message {
                     position: relative;
                     margin-top: 10px;
                     margin-bottom: 10px;
+                    background-color: $input-background-color;
+                    width: 93%;
+                    padding: 10px;
+                    border-radius: 5px;
 
                     p {
                         font-family: $light-font;
                         color: $font-secondary-color;
                     }
                     p:not(.time) {
-                        background-color: $input-background-color;
                         margin-left: 5px;
-                        width: 90%;
-                        border-radius: 5px;
                         text-align: justify;
-                        padding: 10px;
+                    }
+                    img {
+                      width: 100%;
+                      margin-bottom: 10px;
                     }
                     .time {
                         font-size: 12px;
                         position: absolute;
                         bottom: 0%;
-                        right: 2%;
+                        right: 0%;
                         transform: translate(-50%, -50%);
                         background-color: transparent;
                     }

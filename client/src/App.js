@@ -37,6 +37,7 @@ function App() {
             elements.push(
               <div className='message' key={data.message_key}>
                 <img src={data.message_image_path} alt=''/>
+                <p className='time'>{messageTime}</p>
               </div>
             );
           }

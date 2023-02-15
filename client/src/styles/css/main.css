@@ -52,27 +52,30 @@ section .chat {
       position: absolute;
       bottom: 0;
       max-height: 100%;
-      width: 95%;
+      width: 97.5%;
       overflow-y: auto; }
       section .chat .chat-view .messages .message {
         position: relative;
         margin-top: 10px;
-        margin-bottom: 10px; }
+        margin-bottom: 10px;
+        background-color: #EAEAEA;
+        width: 93%;
+        padding: 10px;
+        border-radius: 5px; }
         section .chat .chat-view .messages .message p {
           font-family: roboto-light;
           color: black; }
         section .chat .chat-view .messages .message p:not(.time) {
-          background-color: #EAEAEA;
           margin-left: 5px;
-          width: 90%;
-          border-radius: 5px;
-          text-align: justify;
-          padding: 10px; }
+          text-align: justify; }
+        section .chat .chat-view .messages .message img {
+          width: 100%;
+          margin-bottom: 10px; }
         section .chat .chat-view .messages .message .time {
           font-size: 12px;
           position: absolute;
           bottom: 0%;
-          right: 2%;
+          right: 0%;
           transform: translate(-50%, -50%);
           background-color: transparent; }
         section .chat .chat-view .messages .message.sent {
