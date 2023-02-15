@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use(fileupload());
 
-app.post("/send-message", (req, res) => {
+app.post("/send-message", async (req, res) => {
   const messageData = typeof req.files !== "undefined" ? req.files.file.data : req.body.message;
 
   const message = new Message(messageData);
@@ -21,7 +21,7 @@ app.post("/send-message", (req, res) => {
   if (typeof messageData === "string") {
     message.insert();
   } else if (typeof messageData === "object") {
-    message.insertImage();
+    await message.insertImage();
   }
 });
 

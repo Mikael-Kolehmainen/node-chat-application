@@ -26,12 +26,20 @@ function App() {
             );
             messageDates.push(messageDate);
           }
-          elements.push(
-            <div className='message' key={data.message_key}>
-              <p className='text'>{data.message}</p>
-              <p className='time'>{messageTime}</p>
-            </div>
-          );
+          if (typeof data.message !== "undefined") {
+            elements.push(
+              <div className='message' key={data.message_key}>
+                <p className='text'>{data.message}</p>
+                <p className='time'>{messageTime}</p>
+              </div>
+            );
+          } else if (typeof data.message_image_path !== "undefined") {
+            elements.push(
+              <div className='message' key={data.message_key}>
+                <img src={data.message_image_path} alt=''/>
+              </div>
+            );
+          }
         });
       }
       setMessageElements(elements);

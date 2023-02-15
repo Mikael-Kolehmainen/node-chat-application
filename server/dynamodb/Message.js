@@ -39,7 +39,7 @@ module.exports = class Message {
     });
   }
 
-  insertImage() {
+  async insertImage() {
     const s3 = new AWS.S3({
       s3ForcePathStyle: true
     });
@@ -50,10 +50,14 @@ module.exports = class Message {
       Body: this.message
     };
 
-    s3.upload(params_s3, function(err, data) {
-      if (err) throw err;
-      console.log("File uploaded", data);
-    });
+    let filePath = "";
+
+    try {
+      const imageData = await s3.upload(params_s3).promise();
+      filePath = imageData.Location;
+    } catch (error) {
+      throw error;
+    }
 
     const docClient = new AWS.DynamoDB.DocumentClient();
 
@@ -61,7 +65,7 @@ module.exports = class Message {
     const item = {
       "message_key": key.create(15),
       "message_date": today.getDateTime(),
-      "message_image_name": fileName,
+      "message_image_path": filePath,
       "sender": "anonymous",
     };
     const params_db = {
@@ -108,23 +112,6 @@ module.exports = class Message {
       maxAge: 1000 * 60 * 15,
       httpOnly: true,
     }); */
-
-    const s3 = new AWS.S3({
-      s3ForcePathStyle: true
-    });
-    messages.forEach(async (message) => {
-      if (typeof message.message_image_name !== "undefined") {
-        const params_s3 = {
-          Bucket: this.#AWS_BUCKET,
-          Key: message.message_image_name
-        };
-        try {
-          message.message_image_url = await s3.getSignedUrlPromise('getObject', params_s3);
-        } catch (error) {
-          console.warn(`Error: ${error}`);
-        }
-      }
-    });
 
     return messages;
   }
