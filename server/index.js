@@ -1,17 +1,20 @@
+const cookieParser = require("cookie-parser");
 const express = require("express");
 const fileupload = require("express-fileupload");
 const cors = require("cors");
+
 const Message = require("./dynamodb/Message");
 
 const PORT = process.env.PORT || 3001;
 
 const app = express();
+app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 app.use(fileupload());
 
 app.post("/send-message", (req, res) => {
-  const messageData = typeof req.files.file.data !== "undefined" ? req.files.file.data : req.body.message;
+  const messageData = typeof req.files !== "undefined" ? req.files.file.data : req.body.message;
 
   const message = new Message(messageData);
 
@@ -24,8 +27,7 @@ app.post("/send-message", (req, res) => {
 
 app.get("/get-messages", async (req, res) => {
   const message = new Message();
-  const messages = await message.selectAll();
-  res.send(messages);
+  res.send(await message.selectAll(req, res));
 });
 
 app.listen(PORT, () => {

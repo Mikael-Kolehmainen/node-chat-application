@@ -5,8 +5,8 @@ const BACKEND_ADDRESS = "http://localhost:3001";
 class Messages {
 
   static async get() {
-    try {
-        const response = await axios.get(`${BACKEND_ADDRESS}/get-messages`);
+    try {                                                                 /* Has to do with cookies & jwt */
+        const response = await axios.get(`${BACKEND_ADDRESS}/get-messages`/*, {withCredentials: true}*/);
         return response.data;
     } catch (error) {
         console.log(error);
