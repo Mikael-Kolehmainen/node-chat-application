@@ -7,6 +7,7 @@
 <ul>
   <li>DynamoDB</li>
   <li>S3</li>
+  <li>Lambda</li>
 </ul>
 
 ## How to install LocalStack
