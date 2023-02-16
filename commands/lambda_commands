@@ -9,10 +9,18 @@ aws --endpoint-url=http://localhost:4566 lambda create-function --function-name 
 aws --endpoint-url=http://localhost:4566 lambda invoke --function-name lambda-test ./output.json
 
 # ATTACH TRIGGER TO LAMBDA FUNCTION #
-aws --endpoint-url=http://localhost:4566 s3api put-bucket-notification-configuration --bucket my-bucket --notification-configuration file://s3-notification-config.json
+aws --endpoint-url=http://localhost:4566 s3api put-bucket-notification-configuration --bucket chat-images --notification-configuration file://resize-image-trigger-config.json
 
 # CHECK LAMBDA FUNCTION LOG #
 aws --endpoint-url=http://localhost:4566 logs tail '/aws/lambda/lambda-resize-image' --follow
 
 # DELETE LAMBDA FUNCTION #
 aws --endpoint-url=http://localhost:4566 lambda delete-function --function-name lambda-resize-image
+
+
+# ORDER OF EXECUTION #
+1. Create zip
+2. Create lambda function
+3. Attach trigger .json file to lambda function
+4. Invoke/try the feature in the app
+5. Check the function log
