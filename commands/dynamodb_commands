@@ -1,0 +1,15 @@
+
+# CREATE TABLE #
+aws --endpoint-url=http://localhost:4566 dynamodb create-table --cli-input-json file://messages.json --region us-east-1
+
+# SHOW TABLES #
+aws --endpoint-url=http://localhost:4566 dynamodb list-tables
+
+# PUT ITEM #
+aws --endpoint-url=http://localhost:4566 dynamodb put-item --table-name messages --item file://test-data.json --region us-east-1
+
+# DESCRIBE TABLE #
+aws --endpoint-url=http://localhost:4566 dynamodb describe-table --table-name messages
+
+# SCAN TABLE #
+aws --endpoint-url=http://localhost:4566 dynamodb scan --table-name messages
