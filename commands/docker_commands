@@ -1,0 +1,12 @@
+
+# Check currenlty running containers #
+netstat -tunlp | grep 4566
+
+# Kill currently running containers #
+docker container kill $(docker ps -q)
+
+    # On permission error #
+    sudo reboot
+
+# Start localstack docker container #
+docker run --rm -it -p 4566:4566 -p 4571:4571 localstack/localstack DYNAMODB_SHARE_DB=1

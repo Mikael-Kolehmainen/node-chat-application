@@ -26,7 +26,9 @@ exports.handler = async (event, context) => {
     };
     const imageData = await s3.upload(params).promise();
     console.log(imageData.Location);
+    return "success!";
   } catch (error) {
     console.log(error);
+    return "error!";
   }
 };
