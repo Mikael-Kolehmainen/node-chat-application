@@ -1,0 +1,24 @@
+
+# SET OUTPUT TABLE #
+aws configure set output "table"
+
+# CREATE SNS TOPIC #
+aws --endpoint-url=http://localhost:4566 sns create-topic --name order-creation-events --region us-east-1 --output table | cat
+
+# CREATE SQS QUEUE #
+aws --endpoint-url=http://localhost:4566 sqs create-queue --queue-name dummy-queue --region us-east-1 --output table | cat
+
+# GET SQS QUEUE #
+aws --endpoint-url=http://localhost:4566 sqs get-queue-attributes --queue-url http://localhost:4566/000000000000/dummy-queue --attribute-names QueueArn
+
+# SUBSCRIBE SQS TO SNS TOPIC #
+aws --endpoint-url=http://localhost:4566 sns subscribe --topic-arn arn:aws:sns:us-east-1:000000000000:order-creation-events --protocol sqs --notification-endpoint arn:aws:sqs:us-east-1:000000000000:dummy-queue --output table | cat
+
+# RECEIVE MESSAGE FROM SQS #
+aws --endpoint-url=http://localhost:4566 sqs receive-message --queue-url http://localhost:4566/000000000000/dummy-queue --region us-east-1 --output json | cat
+
+# DELETE MESSAGE FROM SQS #
+aws sqs delete-message --endpoint-url=http://localhost:4566 --queue-url http://localhost:4566/000000000000/dummy-queue --region us-east-1  --receipt-handle <message-handle>
+
+# SEND EVENTS TO SNS TOPIC #
+aws sns publish --endpoint-url=http://localhost:4566 --topic-arn arn:aws:sns:us-east-1:000000000000:order-creation-events --message "Hello World" --region us-east-1 --output json | cat

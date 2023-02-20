@@ -5,8 +5,11 @@ zip -r ./server/lambda/resize-image.zip ./server/
 # CREATE LAMBDA FUNCTION #
 aws --endpoint-url=http://localhost:4566 lambda create-function --function-name lambda-resize-image --zip-file fileb://resize-image.zip --handler ./server/lambda/resize-image.handler --runtime nodejs16.x --role arn:aws:iam::000000000000:role/lambda-role
 
+# PUT FUNCTION CONCURRENCY #
+aws --endpoint-url=http://localhost:4566 lambda put-function-concurrency --function-name lambda-resize-image --reserved-concurrent-executions 0
+
 # INVOKE LAMBDA FUNCTION #
-aws --endpoint-url=http://localhost:4566 lambda invoke --function-name lambda-test ./output.json
+aws --endpoint-url=http://localhost:4566 lambda invoke --function-name lambda-resize-image ./output.json
 
 # ATTACH TRIGGER TO LAMBDA FUNCTION #
 aws --endpoint-url=http://localhost:4566 s3api put-bucket-notification-configuration --bucket chat-images --notification-configuration file://resize-image-trigger-config.json
