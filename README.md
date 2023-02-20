@@ -8,6 +8,8 @@
   <li>DynamoDB</li>
   <li>S3</li>
   <li>Lambda</li>
+  <li>SNS</li>
+  <li>SQS</li>
 </ul>
 
 ## How to install LocalStack
