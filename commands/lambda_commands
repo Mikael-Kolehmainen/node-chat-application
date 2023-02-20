@@ -3,7 +3,7 @@
 zip -r ./server/lambda/resize-image.zip ./server/
 
 # CREATE LAMBDA FUNCTION #
-aws --endpoint-url=http://localhost:4566 lambda create-function --function-name lambda-resize-image --zip-file fileb://resize-image.zip --handler ./server/lambda/resize-image.handler --runtime nodejs16.x --role arn:aws:iam::000000000000:role/lambda-role
+aws --endpoint-url=http://localhost:4566 lambda create-function --function-name lambda-resize-image --zip-file file://resize-image.zip --handler ./server/lambda/resize-image.handler --runtime nodejs16.x --role arn:aws:iam::000000000000:role/lambda-role
 
 # PUT FUNCTION CONCURRENCY #
 aws --endpoint-url=http://localhost:4566 lambda put-function-concurrency --function-name lambda-resize-image --reserved-concurrent-executions 0
