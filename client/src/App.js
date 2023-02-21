@@ -3,8 +3,8 @@ import Messages from "./components/Messages";
 import DateTime from "./classes/DateTime";
 
 function App() {
-  const [message, setMessage] = useState("");
-  const [image, setImage] = useState(null);
+  let [message, setMessage] = useState("");
+  let [image, setImage] = useState(null);
   const [messageElements, setMessageElements] = useState([]);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ function App() {
     return () => clearInterval(messageUpdateInterval);
   }, [])
 
-  async function getMessages() {
+  const getMessages = async () => {
     return await Messages.get();
   }
 
@@ -61,12 +61,14 @@ function App() {
     setImage(event.target.files[0]);
   }
 
-  async function sendMessage(event) {
+  const sendMessage = async (event) => {
     event.preventDefault();
     if (message !== "") {
       Messages.send(message);
+      setMessage("");
     } else if (image !== null) {
       Messages.sendImage(image);
+      setImage(null);
     }
   }
 

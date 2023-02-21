@@ -26,6 +26,7 @@ class Messages {
 
   static async sendImage(image) {
     try {
+      document.getElementById("message-media-input").value = "";
       const formData = new FormData();
       formData.append("file", image);
 
