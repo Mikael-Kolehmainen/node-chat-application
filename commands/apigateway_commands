@@ -1,0 +1,23 @@
+
+# CREATE REST API #
+aws --endpoint-url=http://localhost:4566 apigateway create-rest-api --region us-east-1 --name 'API Test'
+
+# GET API RESOURCES #
+aws --endpoint-url=http://localhost:4566 apigateway get-resources --region us-east-1 --rest-api-id 6myg9ocryp
+
+# CREATE API RESOURCE #
+--parent-id = id:et på path "/" då man tar GET API RESOURCES
+
+aws --endpoint-url=http://localhost:4566 apigateway create-resource --region us-east-1 --rest-api-id 6myg9ocryp --parent-id vp3s834dhu --path-part "{somethingId}"
+
+# PUT METHOD TO API PATH #
+aws --endpoint-url=http://localhost:4566 apigateway put-method --region us-east-1 --rest-api-id 6myg9ocryp --resource-id af59l9xqae --http-method GET --request-parameters "method.request.path.somethingId=true" --authorization-type "NONE"
+
+# INTEGRATE LAMBDA TO API #
+aws --endpoint-url=http://localhost:4566 apigateway put-integration --region us-east-1 --rest-api-id 6myg9ocryp --resource-id af59l9xqae --http-method GET --type AWS_PROXY --integration-http-method POST --uri arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:000000000000:function:api-test-handler/invocations --passthrough-behavior WHEN_NO_MATCH
+
+# DEPLOY API #
+aws --endpoint-url=http://localhost:4566 apigateway create-deployment --region us-east-1 --rest-api-id 6myg9ocryp --stage-name test
+
+# TEST THE API #
+curl http://localhost:4566/restapis/6myg9ocryp/test/_user_request_/HowMuchIsTheFish

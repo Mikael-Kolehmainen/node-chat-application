@@ -1,0 +1,4 @@
+
+# DEPLOY SERVERLESS #
+serverless deploy --verbose --stage local
+
