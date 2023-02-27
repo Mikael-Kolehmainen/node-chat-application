@@ -4,7 +4,6 @@ const fileupload = require("express-fileupload");
 const cors = require("cors");
 
 const { AWS } = require("./AWS");
-const Message = require("./messages/Message");
 
 const PORT = process.env.PORT || 3001;
 
@@ -16,13 +15,25 @@ app.use(fileupload());
 
 app.post("/send-message", async (req, res) => {
   const messageData = typeof req.files !== "undefined" ? req.files.file.data : req.body.message;
-
-  const message = new Message(messageData);
+  let params;
 
   if (typeof messageData === "string") {
-    message.insert();
+    params = {
+      FunctionName: "sendMessage",
+      Payload: `{"messageData" : "${messageData}"}`,
+    };
   } else if (typeof messageData === "object") {
-    await message.insertImage();
+  //  await message.insertImage();
+    params = {
+      FunctionName: "sendImage",
+      Payload: `{"messageData" : "${messageData}"}`,
+    };
+  }
+  const lambda = new AWS.Lambda();
+  try {
+    await lambda.invoke(params).promise();
+  } catch (error) {
+    console.log(error, error.stack);
   }
 });
 

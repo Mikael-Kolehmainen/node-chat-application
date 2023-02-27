@@ -19,26 +19,6 @@ module.exports = class Message {
     this.message = message;
   }
 
-  insert() {
-    const docClient = new AWS.DynamoDB.DocumentClient();
-
-    const today = new DateTime();
-    const item = {
-      "message_key": key.create(15),
-      "message_date": today.getDateTime(),
-      "message": this.message,
-      "sender": "anonymous",
-    };
-    const params = {
-      TableName: this.#TABLE_NAME,
-      Item: item
-    }
-    docClient.put(params, function(error, data) {
-      if (error) console.log("messages::insert::error - " + JSON.stringify(error, null, 2));
-      console.log("messages::insert::success");
-    });
-  }
-
   async insertImage() {
     const s3 = new AWS.S3({
       s3ForcePathStyle: true
@@ -76,44 +56,6 @@ module.exports = class Message {
       if (error) console.log("messages::insert::error - " + JSON.stringify(error, null, 2));
       console.log("messages::insert::success");
     });
-  }
-
-  async selectAll(req, res) {
-    const docClient = new AWS.DynamoDB.DocumentClient();
-
-    const params = {
-      TableName: this.#TABLE_NAME,
-    };
-
-    let messages = [];
-    do{
-      const items = await docClient.scan(params).promise();
-      items.Items.forEach((item) => messages.push(item));
-      params.ExclusiveStartKey = items.LastEvaluatedKey;
-    }while(typeof params.ExclusiveStartKey !== "undefined");
-
-    messages.sort(this.#sortByDate);
-
-    // Couldn't get the cookie to work
-/*    console.log(JSON.stringify(req.cookies));
-
-    if (typeof req.cookies !== "undefined" && typeof req.cookies.token !== "undefined") {
-      const cookieToken = req.cookies.token;
-      const amountOfMessages = jwt.verify(cookieToken, this.#JWT_SECRET_KEY);
-
-      if (amountOfMessages == messages.length) {
-        return "already saved";
-      }
-    }
-
-    const token = jwt.sign(messages.length, this.#JWT_SECRET_KEY)
-
-    res.cookie("token", token, {
-      maxAge: 1000 * 60 * 15,
-      httpOnly: true,
-    }); */
-
-    return messages;
   }
 
   #sortByDate(a, b) {
