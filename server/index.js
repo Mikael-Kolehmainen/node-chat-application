@@ -23,7 +23,6 @@ app.post("/send-message", async (req, res) => {
       Payload: `{"messageData" : "${messageData}"}`,
     };
   } else if (typeof messageData === "object") {
-  //  await message.insertImage();
     params = {
       FunctionName: "sendImage",
       Payload: `{"messageData" : "${messageData}"}`,

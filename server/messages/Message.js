@@ -57,12 +57,4 @@ module.exports = class Message {
       console.log("messages::insert::success");
     });
   }
-
-  #sortByDate(a, b) {
-    if (a.message_date === b.message_date) {
-      return 0;
-    } else {
-      return (a.message_date < b.message_date) ? -1 : 1;
-    }
-  }
 }
