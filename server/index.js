@@ -3,7 +3,8 @@ const express = require("express");
 const fileupload = require("express-fileupload");
 const cors = require("cors");
 
-const Message = require("./dynamodb/Message");
+const { AWS } = require("./AWS");
+const Message = require("./messages/Message");
 
 const PORT = process.env.PORT || 3001;
 
@@ -26,8 +27,17 @@ app.post("/send-message", async (req, res) => {
 });
 
 app.get("/get-messages", async (req, res) => {
-  const message = new Message();
-  res.send(await message.selectAll(req, res));
+  const lambda = new AWS.Lambda();
+  const params = {
+    FunctionName: "getMessages",
+  };
+
+  try {
+    const messages = await lambda.invoke(params).promise();
+    res.send(messages.Payload);
+  } catch (error) {
+    console.log(error, error.stack);
+  }
 });
 
 app.listen(PORT, () => {

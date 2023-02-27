@@ -1,0 +1,37 @@
+{
+  "env": {
+      "node": true,
+      "commonjs": true,
+      "es2021": true
+  },
+  "plugins": ["no-floating-promise"],
+  "extends": "airbnb-base",
+  "overrides": [
+  ],
+  "ignorePatterns":["node_modules/","*test*"],
+  "parserOptions": {
+      "ecmaVersion": "latest"
+  },
+  "rules": {
+      "prefer-const": "warn",
+      "linebreak-style": "off",
+      "comma-dangle": "off",
+      "quote-props": ["off", "always"],
+      "max-len": "off",
+      "no-use-before-define": "off",
+      "arrow-body-style": "off",
+      "no-console": "off",
+      "quotes": ["warn", "double"],
+      "object-shorthand": "off",
+      "prefer-destructuring": "off",
+      "prefer-template": "off",
+      "no-plusplus": "off",
+      "strict": "off",
+      "no-return-await": "warn",
+      "eqeqeq": "off",
+      "func-names": "off",
+      "require-await": "warn",
+      "no-floating-promise/no-floating-promise": 2,
+      "no-restricted-syntax": "off"
+  }
+}

@@ -1,0 +1,8 @@
+
+# LAMBDA GET MESSAGES #
+
+FunctionName: getMessages
+# ZIP #
+zip -r server/lambda.zip server/
+# CREATE LAMBDA FUNCTION #
+aws --endpoint-url=http://localhost:4566 lambda create-function --function-name getMessages --zip-file fileb://server/lambda.zip --handler ./server/messages/getMessages.handler --runtime nodejs16.x --role arn:aws:iam::000000000000:role/lambda-role
