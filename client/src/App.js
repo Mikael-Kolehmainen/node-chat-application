@@ -70,6 +70,7 @@ function App() {
     const imagePreviewURL = URL.createObjectURL(event.target.files[0]);
     setimagePreview(imagePreviewURL);
     setImage(event.target.files[0]);
+    event.target.value = '';
   }
 
   const sendMessage = async (event) => {
@@ -86,6 +87,13 @@ function App() {
     }
   }
 
+  const removeImage = () => {
+    setHideFileUpload(false);
+    setHideImagePreview(true);
+    setExpandMessageInput(false)
+    setImage(null);
+  }
+
   return (
     <section>
       <article className='box chat'>
@@ -99,6 +107,9 @@ function App() {
         </div>
         <form className={`chat-controller ${expandMessageInput ? "expanded" : ""}`} onSubmit={sendMessage}>
           <input type='text' name='message' disabled={hideFileUpload} onChange={handleTextInput} id='message-input' className={`input-field ${expandMessageInput ? "expanded" : ""}`} placeholder='Write message here' />
+          <div className={`btn icon red round remove-image ${hideImagePreview ? "hide" : ""}`} onClick={removeImage}>
+            <i className='fa-solid fa-xmark'></i>
+          </div>
           <img id='image-preview' className={`${hideImagePreview ? "hide" : ""}`} src={imagePreview} alt='' />
           <div className={`file-upload ${hideFileUpload ? "hide" : ""}`}>
             <label htmlFor='message-media-input' className='btn icon'>

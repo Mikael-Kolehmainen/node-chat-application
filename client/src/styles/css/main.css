@@ -19,6 +19,8 @@
     height: 50%; }
     .btn.icon i.fa-file {
       background: url("/src/media/icons/file.svg") no-repeat center; }
+    .btn.icon i.fa-xmark {
+      background: url("/src/media/icons/close.svg") no-repeat center; }
 
 section .chat {
   height: 750px;
@@ -136,6 +138,14 @@ section .chat {
       left: 35%;
       transform: translate(-50%, -50%);
       width: 60%; }
+    section .chat .chat-controller .remove-image {
+      position: absolute;
+      top: 10%;
+      left: 70%;
+      transform: translate(-50%, -50%);
+      z-index: 99;
+      width: 35px;
+      height: 35px; }
     section .chat .chat-controller #send-btn {
       width: 20%;
       margin-left: auto; }
@@ -166,7 +176,7 @@ a {
     text-decoration: underline; }
 
 .hide {
-  display: none; }
+  display: none !important; }
 
 /* width */
 ::-webkit-scrollbar {
@@ -219,6 +229,10 @@ a {
     background-color: #1ABD00; }
     .btn.add:hover {
       background-color: #107400; }
+  .btn.red {
+    background-color: red; }
+    .btn.red:hover {
+      background-color: #aa0000; }
   .btn:hover {
     background-color: #B88917; }
   .btn:disabled {

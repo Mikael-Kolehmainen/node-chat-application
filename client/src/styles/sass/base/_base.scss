@@ -23,7 +23,7 @@ a {
     }
 }
 .hide {
-  display: none;
+  display: none !important;
 }
 
 // SCROLL BAR
@@ -65,48 +65,55 @@ a {
 // BTN
 
 .btn {
-    font-family: $bold-font;
-    font-size: 22px;
-    color: $font-primary-color;
-    background-color: $button-secondary-color;
-    border: none;
-    box-shadow: 0 4px 4px $shadow-color;
-    cursor: pointer;
-    width: 140px;
-    height: 45px;
-    display: block;
-    position: relative;
-    border-radius: 5px;
+  font-family: $bold-font;
+  font-size: 22px;
+  color: $font-primary-color;
+  background-color: $button-secondary-color;
+  border: none;
+  box-shadow: 0 4px 4px $shadow-color;
+  cursor: pointer;
+  width: 140px;
+  height: 45px;
+  display: block;
+  position: relative;
+  border-radius: 5px;
 
-    i {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    &.round {
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-    }
-    &.add {
-        background-color: $button-add-color;
+  i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &.round {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+  }
+  &.add {
+    background-color: $button-add-color;
 
-        &:hover {
-            background-color: $button-add-hover-color;
-        }
-    }
     &:hover {
-        background-color: $button-secondary-hover-color;
+      background-color: $button-add-hover-color;
     }
-    &:disabled {
-        opacity: 0.5;
+  }
+  &.red {
+    background-color: red;
 
-        &:hover {
-            background-color: $button-secondary-color;
-            cursor: auto;
-        }
+    &:hover {
+      background-color: rgb(170, 0, 0);
     }
+  }
+  &:hover {
+    background-color: $button-secondary-hover-color;
+  }
+  &:disabled {
+    opacity: 0.5;
+
+    &:hover {
+      background-color: $button-secondary-color;
+      cursor: auto;
+    }
+  }
 }
 
 // BOX

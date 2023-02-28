@@ -148,6 +148,15 @@ section {
               transform: translate(-50%, -50%);
               width: 60%;
             }
+            .remove-image {
+              position: absolute;
+              top: 10%;
+              left: 70%;
+              transform: translate(-50%, -50%);
+              z-index: 99;
+              width: 35px;
+              height: 35px;
+            }
             #send-btn {
                 width: 20%;
                 margin-left: auto;
