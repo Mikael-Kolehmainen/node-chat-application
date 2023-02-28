@@ -2,10 +2,16 @@ import React, { useEffect, useState } from 'react';
 import Messages from "./components/Messages";
 import DateTime from "./classes/DateTime";
 
+import imagePreviewPlaceholder from './media/placeholder.jpg';
+
 function App() {
   let [message, setMessage] = useState("");
   let [image, setImage] = useState(null);
   const [messageElements, setMessageElements] = useState([]);
+  const [imagePreview, setimagePreview] = useState(imagePreviewPlaceholder);
+  const [hideFileUpload, setHideFileUpload] = useState(false);
+  const [hideImagePreview, setHideImagePreview] = useState(true);
+  const [expandMessageInput, setExpandMessageInput] = useState(false);
 
   useEffect(() => {
     const messageUpdateInterval = setInterval(async () => {
@@ -58,11 +64,19 @@ function App() {
   }
 
   const handleImageInput = (event) => {
+    setHideFileUpload(true);
+    setHideImagePreview(false);
+    setExpandMessageInput(true)
+    const imagePreviewURL = URL.createObjectURL(event.target.files[0]);
+    setimagePreview(imagePreviewURL);
     setImage(event.target.files[0]);
   }
 
   const sendMessage = async (event) => {
     event.preventDefault();
+    setHideFileUpload(false);
+    setHideImagePreview(true);
+    setExpandMessageInput(false)
     if (message !== "") {
       Messages.send(message);
       setMessage("");
@@ -78,18 +92,19 @@ function App() {
         <header>
           <h1>CHAT</h1>
         </header>
-        <div className='chat-view'>
+        <div className={`chat-view ${expandMessageInput ? "shrinked" : ""}`}>
           <div className='messages'>
             {messageElements}
           </div>
         </div>
-        <form className='chat-controller' onSubmit={sendMessage}>
-          <input type='text' name='message' onChange={handleTextInput} id='message-input' className='input-field' placeholder='Write message here' />
-          <div className='file-upload'>
+        <form className={`chat-controller ${expandMessageInput ? "expanded" : ""}`} onSubmit={sendMessage}>
+          <input type='text' name='message' disabled={hideFileUpload} onChange={handleTextInput} id='message-input' className={`input-field ${expandMessageInput ? "expanded" : ""}`} placeholder='Write message here' />
+          <img id='image-preview' className={`${hideImagePreview ? "hide" : ""}`} src={imagePreview} alt='' />
+          <div className={`file-upload ${hideFileUpload ? "hide" : ""}`}>
             <label htmlFor='message-media-input' className='btn icon'>
               <i className='fa-solid fa-file'></i>
             </label>
-            <input type='file' name='message-media' onChange={handleImageInput} id='message-media-input' className='input-media-field' accept='image/jpg/jpeg/png/gif' />
+            <input type='file' name='message-media' onChange={handleImageInput} id='message-media-input' className="input-media-field" accept='image/jpg/jpeg/png/gif' />
           </div>
           <input type='submit' name='send-message' value='SEND' className='btn' id='send-btn' />
         </form>
