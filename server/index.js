@@ -4,6 +4,7 @@ const fileupload = require("express-fileupload");
 const cors = require("cors");
 
 const { AWS } = require("./AWS");
+const key = require("./misc/key");
 
 const PORT = process.env.PORT || 3001;
 
@@ -23,9 +24,27 @@ app.post("/send-message", async (req, res) => {
       Payload: `{"messageData" : "${messageData}"}`,
     };
   } else if (typeof messageData === "object") {
+    const s3 = new AWS.S3({
+      s3ForcePathStyle: true
+    });
+    const fileName = key.create(15);
+    const params_s3 = {
+      Bucket: "chat-images",
+      Key: fileName,
+      Body: messageData,
+    };
+
+    let filePath = "";
+
+    try {
+      const imageData = await s3.upload(params_s3).promise();
+      filePath = imageData.Location;
+    } catch (error) {
+      throw error;
+    }
     params = {
       FunctionName: "sendImage",
-      Payload: `{"messageData" : "${messageData}"}`,
+      Payload: `{"imagePath" : "${filePath}"}`,
     };
   }
   const lambda = new AWS.Lambda();
