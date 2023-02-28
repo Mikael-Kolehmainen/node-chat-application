@@ -2,7 +2,7 @@
   "LambdaFunctionConfigurations": [
       {
           "Id": "s3eventtriggerslambda",
-          "LambdaFunctionArn": "arn:aws:lambda:us-east-1:000000000000:function:lambda-resize-image",
+          "LambdaFunctionArn": "arn:aws:lambda:us-east-1:000000000000:function:resizeImage",
           "Events": ["s3:ObjectCreated:*"]
       }
   ]
