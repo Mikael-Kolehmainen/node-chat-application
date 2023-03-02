@@ -5,9 +5,14 @@ source $SCRIPTPATH/../const.sh
 
 sleep 5
 # DynamoDB #
-file="file://db/messages.json"
-echo "Creating DynamoDB table based on $file at port $port"
+messagesFile="file://db/messages.json"
+echo "Creating DynamoDB table messages based on $messagesFile"
 aws --endpoint-url=$endpointUrl dynamodb create-table --cli-input-json file://db/messages.json --region us-east-1
+echo \
+
+usersFile="file://db/users.json"
+echo "Creating DynamoDB table users based on $usersFile"
+aws --endpoint-url=$endpointUrl dynamodb create-table --cli-input-json file://db/users.json --region us-east-1
 echo \
 
 echo "Showing created table"
@@ -28,6 +33,9 @@ echo \
 echo "Creating zip for Lambda functions"
 zip -r server/lambda.zip server/
 echo \
+
+echo "Creating saveUser Lambda"
+aws --endpoint-url=$endpointUrl lambda create-function --function-name saveUser --zip-file fileb://server/lambda.zip --handler ./server/users/saveUser.handler --runtime nodejs16.x --role arn:aws:iam::000000000000:role/lambda-role
 
 echo "Creating getMessages Lambda"
 aws --endpoint-url=$endpointUrl lambda create-function --function-name getMessages --zip-file fileb://server/lambda.zip --handler ./server/messages/getMessages.handler --runtime nodejs16.x --role arn:aws:iam::000000000000:role/lambda-role
