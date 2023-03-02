@@ -1,6 +1,6 @@
 
 
-export default function SignIn() {
+function SignIn() {
   return (
     <section>
       <article className="box sign-in">
@@ -15,3 +15,5 @@ export default function SignIn() {
     </section>
   );
 }
+
+export default SignIn;

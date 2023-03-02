@@ -79,10 +79,10 @@ export default function Chat() {
     setHideImagePreview(true);
     setExpandMessageInput(false)
     if (message !== "") {
-      Messages.send(message);
+      await Messages.send(message);
       setMessage("");
     } else if (image !== null) {
-      Messages.sendImage(image);
+      await Messages.sendImage(image);
       setImage(null);
     }
   }

@@ -14,6 +14,19 @@ app.use(cors());
 app.use(express.json());
 app.use(fileupload());
 
+app.post("/save-user", async (req, res) => {
+  const lambda = new AWS.Lambda();
+  const params = {
+    FunctionName: "saveUser",
+    PayLoad: req.body
+  };
+  try {
+    await lambda.invoke(params).promise();
+  } catch (error) {
+    console.log(error, error.stack);
+  }
+});
+
 app.post("/send-message", async (req, res) => {
   const messageData = typeof req.files !== "undefined" ? req.files.file.data : req.body.message;
   let params;

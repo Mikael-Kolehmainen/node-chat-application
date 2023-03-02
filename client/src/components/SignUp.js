@@ -1,11 +1,14 @@
 import { useState } from "react";
 
-export default function SignUp() {
+import User from "./User";
+
+function SignUp() {
   const [passwordField, setPasswordField] = useState("");
   const [repeatPasswordField, setRepeatPasswordField] = useState("");
   const [passwordValidationMsg, setPasswordValidationMsg] = useState("");
   const [disableSubmitBtn, setDisableSubmitBtn] = useState(true);
   const [passwordLengthValidationColor, setPasswordLengthValidationColor] = useState({color: "white"});
+  const [usernameField, setUsernameField] = useState("");
 
   const savePassword = (event) => {
     setPasswordField(event.target.value);
@@ -32,12 +35,22 @@ export default function SignUp() {
     }
   }
 
+  const saveUsername = (event) => {
+    setUsernameField(event.target.value);
+  }
+
+  const signUp = async (event) => {
+    event.preventDefault();
+    const user = new User(usernameField, passwordField);
+    await user.signUp();
+  }
+
   return(
     <section>
       <article className="box sign-up">
         <h1>SIGN UP</h1>
-        <form>
-          <input type="text" name="username" placeholder="USERNAME" className="input-field" maxLength={25} />
+        <form onSubmit={signUp}>
+          <input type="text" name="username" onChange={saveUsername} placeholder="USERNAME" className="input-field" maxLength={25} />
           <input type="password" onChange={savePassword} onBlur={validatePassword} name="pw" maxLength={25} placeholder="PASSWORD" className="input-field" />
           <input type="password" onChange={saveRepeatPassword} onBlur={validatePassword} name="repeat-pw" maxLength={25} placeholder="REPEAT PASSWORD" className="input-field" />
           <p id="validation-msg">{passwordValidationMsg}</p>
@@ -54,3 +67,5 @@ export default function SignUp() {
     </section>
   );
 }
+
+export default SignUp;

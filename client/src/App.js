@@ -1,5 +1,4 @@
-import ReactDOM from 'react-dom/client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Chat from './components/Chat';

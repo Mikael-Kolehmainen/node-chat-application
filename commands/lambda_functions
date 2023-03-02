@@ -20,3 +20,10 @@ FunctionName: sendImage
 
 # CREATE LAMBDA FUNCTION #
 aws --endpoint-url=http://localhost:4566 lambda create-function --function-name sendImage --zip-file fileb://server/lambda.zip --handler ./server/messages/sendImage.handler --runtime nodejs16.x --role arn:aws:iam::000000000000:role/lambda-role
+
+# LAMBDA SAVE USER #
+
+FunctionName: saveUser
+
+# CREATE LAMBDA FUNCTION #
+aws --endpoint-url=http://localhost:4566 lambda create-function --function-name saveUser --zip-file fileb://server/lambda.zip --handler ./server/users/saveUser.handler --runtime nodejs16.x --role arn:aws:iam::000000000000:role/lambda-role
