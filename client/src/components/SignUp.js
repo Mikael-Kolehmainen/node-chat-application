@@ -40,7 +40,6 @@ function SignUp() {
   }
 
   const signUp = async (event) => {
-    event.preventDefault();
     const user = new User(usernameField, passwordField);
     await user.signUp();
   }

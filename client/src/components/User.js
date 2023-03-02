@@ -12,9 +12,8 @@ class User {
     try {
       const user = {
         "username": this.username,
-        "password": this.password
+        "password": this.password,
       };
-      console.log(user);
       const response = await axios.post(`${BACKEND_ADDRESS}/save-user`, user);
 
       console.log(response);
@@ -24,7 +23,17 @@ class User {
   }
 
   async signIn() {
+    try {
+      const user = {
+        "username": this.username,
+        "password": this.password,
+      };
+      const response = await axios.post(`${BACKEND_ADDRESS}/validate-user`, user);
 
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

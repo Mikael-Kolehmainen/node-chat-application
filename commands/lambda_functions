@@ -27,3 +27,11 @@ FunctionName: saveUser
 
 # CREATE LAMBDA FUNCTION #
 aws --endpoint-url=http://localhost:4566 lambda create-function --function-name saveUser --zip-file fileb://server/lambda.zip --handler ./server/users/saveUser.handler --runtime nodejs16.x --role arn:aws:iam::000000000000:role/lambda-role
+
+# LAMBDA VALIDATE USER #
+
+FunctionName: validateUser
+
+# CREATE LAMBDA FUNCTION #
+aws --endpoint-url=http://localhost:4566 lambda create-function --function-name validateUser --zip-file fileb://server/lambda.zip --handler ./server/users/validateUser.handler --runtime nodejs16.x --role arn:aws:iam::000000000000:role/lambda-role
+

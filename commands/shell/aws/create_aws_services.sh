@@ -36,6 +36,11 @@ echo \
 
 echo "Creating saveUser Lambda"
 aws --endpoint-url=$endpointUrl lambda create-function --function-name saveUser --zip-file fileb://server/lambda.zip --handler ./server/users/saveUser.handler --runtime nodejs16.x --role arn:aws:iam::000000000000:role/lambda-role
+echo \
+
+echo "Creating validateUser Lambda"
+aws --endpoint-url=$endpointUrl lambda create-function --function-name validateUser --zip-file fileb://server/lambda.zip --handler ./server/users/validateUser.handler --runtime nodejs16.x --role arn:aws:iam::000000000000:role/lambda-role
+echo \
 
 echo "Creating getMessages Lambda"
 aws --endpoint-url=$endpointUrl lambda create-function --function-name getMessages --zip-file fileb://server/lambda.zip --handler ./server/messages/getMessages.handler --runtime nodejs16.x --role arn:aws:iam::000000000000:role/lambda-role

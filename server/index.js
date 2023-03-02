@@ -23,7 +23,20 @@ app.post("/save-user", async (req, res) => {
   try {
     await lambda.invoke(params).promise();
   } catch (error) {
-    console.log(error, error.stack);
+    console.error(error, error.stack);
+  }
+});
+
+app.post("/validate-user", async (req, res) => {
+  const lambda = new AWS.Lambda();
+  const params = {
+    FunctionName: "validateUser",
+    Payload: JSON.stringify(req.body),
+  };
+  try {
+    await lambda.invoke(params).promise();
+  } catch (error) {
+    console.error(error, error.stack);
   }
 });
 
@@ -64,7 +77,7 @@ app.post("/send-message", async (req, res) => {
   try {
     await lambda.invoke(params).promise();
   } catch (error) {
-    console.log(error, error.stack);
+    console.error(error, error.stack);
   }
 });
 
@@ -78,7 +91,7 @@ app.get("/get-messages", async (req, res) => {
     const messages = await lambda.invoke(params).promise();
     res.send(messages.Payload);
   } catch (error) {
-    console.log(error, error.stack);
+    console.error(error, error.stack);
   }
 });
 

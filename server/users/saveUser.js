@@ -1,9 +1,8 @@
 const bcrypt = require("bcrypt");
 const { AWS } = require("../AWS");
 const DateTime = require("../misc/DateTime");
-const key = require("../misc/key");
 
-exports.handler = async(event, context) => {
+exports.handler = async (event, context) => {
   const docClient = new AWS.DynamoDB.DocumentClient();
   const today = new DateTime();
   let hashedPassword;
@@ -14,7 +13,6 @@ exports.handler = async(event, context) => {
   }
 
   const item = {
-    "user_key": key.create(15),
     "user_date": today.getDateTime(),
     "username": event.username,
     "password": hashedPassword,
