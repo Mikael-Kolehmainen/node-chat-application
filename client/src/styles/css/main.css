@@ -156,6 +156,16 @@ section .chat {
       left: 70%;
       transform: translate(-50%, -50%); }
 
+.sign-up .input-field, .sign-in .input-field {
+  text-align: center; }
+
+.sign-up {
+  height: 500px !important; }
+  .sign-up form .btn {
+    margin-top: 90px; }
+  .sign-up #validation-msg {
+    color: red; }
+
 * {
   scroll-behavior: smooth;
   margin: 0;

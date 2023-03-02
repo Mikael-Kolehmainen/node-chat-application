@@ -1,0 +1,17 @@
+.sign-up, .sign-in {
+  .input-field {
+    text-align: center;
+  }
+}
+.sign-up {
+  height: 500px !important;
+
+  form {
+    .btn {
+      margin-top: 90px;
+    }
+  }
+  #validation-msg {
+    color: red;
+  }
+}
