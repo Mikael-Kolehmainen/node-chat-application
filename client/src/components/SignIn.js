@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import User from "./User";
 
@@ -6,6 +7,7 @@ import User from "./User";
 function SignIn() {
   const [usernameField, setUsernameField] = useState("");
   const [passwordField, setPasswordField] = useState("");
+  const navigate = useNavigate();
 
   const saveUsername = (event) => {
     setUsernameField(event.target.value);
@@ -16,8 +18,10 @@ function SignIn() {
   }
 
   const signIn = async (event) => {
+    event.preventDefault();
     const user = new User(usernameField, passwordField);
-    await user.signIn();
+    const redirectAddress = await user.signIn();
+    navigate(redirectAddress);
   }
 
   return (

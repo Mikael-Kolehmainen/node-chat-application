@@ -22,8 +22,10 @@ app.post("/save-user", async (req, res) => {
   };
   try {
     await lambda.invoke(params).promise();
+    res.send("/chat");
   } catch (error) {
     console.error(error, error.stack);
+    res.send("/sign-up");
   }
 });
 
@@ -31,12 +33,16 @@ app.post("/validate-user", async (req, res) => {
   const lambda = new AWS.Lambda();
   const params = {
     FunctionName: "validateUser",
+    InvocationType: "RequestResponse",
     Payload: JSON.stringify(req.body),
   };
   try {
-    await lambda.invoke(params).promise();
+    const redirectAddress = await lambda.invoke(params).promise();
+    console.log(redirectAddress);
+    res.send(redirectAddress.Payload);
   } catch (error) {
     console.error(error, error.stack);
+    res.send("/sign-in");
   }
 });
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import User from "./User";
 
@@ -9,6 +10,7 @@ function SignUp() {
   const [disableSubmitBtn, setDisableSubmitBtn] = useState(true);
   const [passwordLengthValidationColor, setPasswordLengthValidationColor] = useState({color: "white"});
   const [usernameField, setUsernameField] = useState("");
+  const navigate = useNavigate();
 
   const savePassword = (event) => {
     setPasswordField(event.target.value);
@@ -40,8 +42,10 @@ function SignUp() {
   }
 
   const signUp = async (event) => {
+    event.preventDefault();
     const user = new User(usernameField, passwordField);
-    await user.signUp();
+    const redirectAddress = await user.signUp();
+    navigate(redirectAddress);
   }
 
   return(

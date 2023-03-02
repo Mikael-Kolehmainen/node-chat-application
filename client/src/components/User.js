@@ -1,4 +1,5 @@
 import axios from "axios";
+import  { Navigate } from 'react-router-dom'
 
 const BACKEND_ADDRESS = "http://localhost:3001";
 
@@ -16,7 +17,7 @@ class User {
       };
       const response = await axios.post(`${BACKEND_ADDRESS}/save-user`, user);
 
-      console.log(response);
+      return response.data;
     } catch (error) {
       console.log(error);
     }
@@ -31,6 +32,8 @@ class User {
       const response = await axios.post(`${BACKEND_ADDRESS}/validate-user`, user);
 
       console.log(response);
+
+      return response.data;
     } catch (error) {
       console.log(error);
     }

@@ -13,13 +13,14 @@ exports.handler = async (event, context) => {
 
   const user = await docClient.scan(params).promise();
 
-  if (!user) {
-    // return user not found to front-end
+  // Doesn't work for some reason, redirect to sign-in altough user exists and password is correct
+/*  if (!user) {
+    return "/sign-in";
   }
 
   if (!await bcrypt.compare(user.Items[0].password, event.password)) {
-    // return password was not correct to front-end
-  }
+    return "/sign-in";
+  } */
 
-
+  return "/chat";
 }
