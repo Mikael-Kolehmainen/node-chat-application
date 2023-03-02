@@ -18,7 +18,7 @@ app.post("/save-user", async (req, res) => {
   const lambda = new AWS.Lambda();
   const params = {
     FunctionName: "saveUser",
-    PayLoad: req.body
+    Payload: JSON.stringify(req.body),
   };
   try {
     await lambda.invoke(params).promise();
